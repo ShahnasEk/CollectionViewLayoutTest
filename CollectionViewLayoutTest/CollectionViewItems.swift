@@ -10,121 +10,124 @@ import UIKit
 
 class CollectionViewItems {
     
-    
     // BANNER
     func createBannerSection() -> NSCollectionLayoutSection {
         
-        // ITEM
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: bannerTop, leading: bannerLeading, bottom: bannerBottom, trailing: bannerTrailing)
         
-        // GROUP
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.3))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(0.3))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: fifteenPoint, bottom: 0, trailing: tenPoint)
         
-        // SECTION
         let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .groupPaging
-        
+        section.contentInsets = NSDirectionalEdgeInsets(top: tenPoint, leading: 0, bottom: tenPoint, trailing: 0)
+        section.orthogonalScrollingBehavior = .groupPagingCentered
+
+        section.supplementariesFollowContentInsets = false
+        section.boundarySupplementaryItems = [supplementaryHeaderItem()]
+
         return section
         
     }
-    
     
     // SLIDER
     func createSliderSection() -> NSCollectionLayoutSection {
-
-        // ITEM
-        let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalHeight(1), heightDimension: .fractionalHeight(1)))
-        item.contentInsets = NSDirectionalEdgeInsets(top: sliderTop, leading: sliderLeading, bottom: sliderBottom, trailing: sliderTrailing)
-
-        // GROUP
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .absolute(100), heightDimension: .absolute(100)), subitems: [item])
-
-        // SECTION
+        
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(100), heightDimension: .absolute(100))
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
+        group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10)
+        
         let section = NSCollectionLayoutSection(group: group)
-        section.interGroupSpacing = sliderInterGroupSpacing
-        section.contentInsets = NSDirectionalEdgeInsets(top: 2.5, leading: 10, bottom: 2.5, trailing: 10)
+        section.contentInsets = NSDirectionalEdgeInsets(top: tenPoint, leading: fifteenPoint, bottom: tenPoint, trailing: 0)
         section.orthogonalScrollingBehavior = .continuous
-
+        
+        section.supplementariesFollowContentInsets = false
+        section.boundarySupplementaryItems = [supplementaryHeaderItem()]
+        
         return section
-
+        
     }
-    
     
     // HLIST1
     func createHListOneSection() -> NSCollectionLayoutSection {
-        // ITEM
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.4), heightDimension: .fractionalHeight(1))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: HListOnetop, leading: HListOneLeading, bottom: HListOneBottom, trailing: HListOneTrailing)
-
-
-        // GROUP
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.9), heightDimension: .fractionalHeight(0.25))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 2)
-        group.contentInsets.leading = 5
-
-        // SECTION
-        let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .continuous
-//        section.contentInsets = NSDirectionalEdgeInsets(top: 1, leading: 1, bottom: 1, trailing: 1)
-
-        return section
         
+        let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.45), heightDimension: .fractionalWidth(0.4))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10)
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = NSDirectionalEdgeInsets(top: tenPoint, leading: fifteenPoint, bottom: tenPoint, trailing: 0)
+        section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+        
+        section.supplementariesFollowContentInsets = false
+        section.boundarySupplementaryItems = [supplementaryHeaderItem()]
+        
+        return section
     }
     
     
-  // HLIST2
+    // HLIST2
     func createHListTwoSection() -> NSCollectionLayoutSection {
-
+        
         // ITEM
         let smallItemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.5))
         let smallItem = NSCollectionLayoutItem(layoutSize: smallItemSize)
-        smallItem.contentInsets = NSDirectionalEdgeInsets(top: HListTwotop, leading: HListTwoLeading, bottom: HListOneBottom, trailing: HListOneTrailing)
-
-        // VERTICAL GROUP OF ITEMS
-        let verticalGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.25), heightDimension: .fractionalHeight(1))
+        smallItem.contentInsets = NSDirectionalEdgeInsets(top: fivePoint, leading: 0, bottom: fivePoint, trailing: 0)
+        
+        // VERTICAL GROUP OF ITEMS, One item stacked on top of the other item
+        let verticalGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1))
         let verticalGroup = NSCollectionLayoutGroup.vertical(layoutSize: verticalGroupSize, subitems: [smallItem])
-
+        verticalGroup.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: fivePoint, bottom: 0, trailing: fivePoint)
+        
         // HORIZONTAL GROUP CONTAINING THE VERTICAL GROUP AS ITS ITEMS
-        let horizontalGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(2), heightDimension: .fractionalHeight(0.4))
+        let horizontalGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.5))
         let horizontalGroup = NSCollectionLayoutGroup.horizontal(layoutSize: horizontalGroupSize, subitems: [verticalGroup, verticalGroup])
-
+        horizontalGroup.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: tenPoint, bottom: 0, trailing: fivePoint)
+        
         // SECTION
         let section = NSCollectionLayoutSection(group: horizontalGroup)
-        section.contentInsets = NSDirectionalEdgeInsets(top: 2.5, leading: 2.5, bottom: 2.5, trailing: 2.5)
+        section.contentInsets = NSDirectionalEdgeInsets(top: tenPoint, leading: 0, bottom: tenPoint, trailing: 0)
         section.orthogonalScrollingBehavior = .groupPaging
         
+        section.supplementariesFollowContentInsets = false
+        section.boundarySupplementaryItems = [supplementaryHeaderItem()]
 
         return section
+        
     }
     
-    
-
-// VLIST
+    // VLIST
     func createVListSection() -> NSCollectionLayoutSection {
         
-        // ITEM
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5),
+                                              heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: VlistTop, leading: VlistLeading, bottom: VlistBottom, trailing: VlistTrailing)
-
-        // HORIZONTAL GROUP OF ITEMS
-        let horizontalGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
-        let horizontalGroup = NSCollectionLayoutGroup.horizontal(layoutSize: horizontalGroupSize, subitems: [item, item])
-
-        // VERTICAL GROUP CONTAINING THE HORIZONTAL GROUP AS ITS ITEMS
-        let verticalGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(200))
-        let verticalGroup = NSCollectionLayoutGroup.vertical(layoutSize: verticalGroupSize, subitems: [horizontalGroup])
-
-        // SECTION
-        let section = NSCollectionLayoutSection(group: verticalGroup)
-        section.contentInsets = NSDirectionalEdgeInsets(top: 2.5, leading: 0, bottom: 2.5, trailing: 0)
+        item.contentInsets = NSDirectionalEdgeInsets(top: fivePoint, leading: fivePoint, bottom: fivePoint, trailing: fivePoint)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                               heightDimension: .fractionalHeight(0.25))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = NSDirectionalEdgeInsets(top: fivePoint, leading: tenPoint, bottom: tenPoint, trailing: fivePoint)
+        
+        section.supplementariesFollowContentInsets = false
+        section.boundarySupplementaryItems = [supplementaryHeaderItem()]
 
         return section
+        
     }
-    
+
+    // HEADER FUNCTION
+    private func supplementaryHeaderItem() -> NSCollectionLayoutBoundarySupplementaryItem {
+            .init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(50)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+        }
     
 }
+

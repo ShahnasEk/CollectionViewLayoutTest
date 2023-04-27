@@ -7,10 +7,6 @@
 
 import Foundation
 
-struct ListItem {
-    let image: String
-}
-
 
 struct TestData : Codable {
     let type: String

@@ -17,6 +17,7 @@ class ViewController: UIViewController {
     {
         didSet {
             collectionView.dataSource = self
+            collectionView.register(UINib(nibName: "HeaderView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "HeaderView")
         }
     }
     
@@ -27,10 +28,6 @@ class ViewController: UIViewController {
 
         // Do any additional setup after loading the view.
     }
-    
-    
-    
-    
     
     private func createLayout() -> UICollectionViewCompositionalLayout {
         UICollectionViewCompositionalLayout { [weak self] sectionIndex, layoutEnvironment in
@@ -61,7 +58,7 @@ class ViewController: UIViewController {
     }
     
     
-    
+   
     
     
     // function to read the JSON Test Data file
@@ -81,8 +78,6 @@ class ViewController: UIViewController {
        }
     }
 
-    
-    
 }
 
 
@@ -106,6 +101,37 @@ extension ViewController : UICollectionViewDataSource {
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        switch kind {
+        case UICollectionView.elementKindSectionHeader :
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "HeaderView", for: indexPath) as! HeaderView
+            header.setup(testArray[indexPath.section].type)
+            return header
+        default :
+            return UICollectionReusableView()
+        }
+        
+//        let view = collectionView.dequeueReusableSupplementaryView(ofKind: "header", withReuseIdentifier: "HeaderView", for: indexPath) as! HeaderView
+//        let titleIndex = testArray[indexPath.section].type
+//
+//        switch titleIndex {
+//        case "banner" :
+//            view.title = titleIndex
+//        case "slider" :
+//            view.title = titleIndex
+//        case "hlist1" :
+//            view.title = titleIndex
+//        case "hlist2" :
+//            view.title = titleIndex
+//        case "vlist" :
+//            view.title = titleIndex
+//        default:
+//            view.title = "No title available"
+//        }
+//
+//        return view
+    }
     
     
 }
